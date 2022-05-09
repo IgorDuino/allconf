@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'manager.apps.ManagerConfig',
+    'users.apps.UsersConfig',
 
     'debug_toolbar'
 ]
@@ -85,6 +86,9 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+AUTH_USER_MODEL = 'auth.User'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
