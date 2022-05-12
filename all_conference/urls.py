@@ -1,12 +1,12 @@
-from django.conf import settings
+from django.conf    import settings
 from django.contrib import admin
-from django.urls import path, include
+from django.urls    import path, include
 
 
 urlpatterns = [
     path('admin/',    admin.site.urls),
 
-    path("allconf.com/subdomen/", include(("subdomen.urls", "subdomen"), namespace="subdomen"))
+    path("subdomain/", include(("subdomain.urls", "subdomain"), namespace="subdomen"))
 ]
 
 if settings.DEBUG:

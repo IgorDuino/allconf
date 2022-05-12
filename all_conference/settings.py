@@ -5,10 +5,11 @@ from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config('SECRET_KEY')
-
-DEBUG = config('DEBUG_MODE', default=False, cast=bool)
+DEBUG      = config('DEBUG_MODE', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['*']
+
+SITE = 'allconf.ru:8000'
 
 
 # Application definition
@@ -24,10 +25,12 @@ INSTALLED_APPS = [
     'manager.apps.ManagerConfig',
     'users.apps.UsersConfig',
 
-    'debug_toolbar'
+    'debug_toolbar',
+    'django_hosts',
 ]
 
 MIDDLEWARE = [
+    'django_hosts.middleware.HostsRequestMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 
     'django.middleware.security.SecurityMiddleware',
@@ -37,9 +40,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'django_hosts.middleware.HostsResponseMiddleware',
 ]
 
-ROOT_URLCONF = 'all_conference.urls'
+ROOT_URLCONF  = 'all_conference.urls'
+ROOT_HOSTCONF = 'all_conference.hosts'
+DEFAULT_HOST  = 'www'
 
 TEMPLATES = [
     {
