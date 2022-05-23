@@ -1,0 +1,11 @@
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">{{ item.name }}</h4>
+        <p class="card-text">{{ item.text|safe }}</p>
+        {% for tag in item.tags.all %}
+            <a class="card-link">{{ tag.name }}</a>
+        {% endfor %}
+        <a class="card-link" href="{% url 'catalog:item-detail' item.id %}">Подробнее</a>
+    </div>
+     <img class="card-img" src="{{ item.get_image_400x300.url }}">
+</div>

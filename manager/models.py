@@ -1,14 +1,16 @@
 from django.db import models
-from django.db.models import Q
-from core.models import TitleDescriptionMixin
-from django.core.files.storage import FileSystemStorage
+from django.db.models import Prefetch
+from core.models import TitleDescriptionMixin, SlugMixin, IsActiveMixin
 from mptt.models import MPTTModel, TreeForeignKey
 
 
-storage = FileSystemStorage(location='/media/file')
-
-
-class Category(MPTTModel, TitleDescriptionMixin):
+class Category(MPTTModel, TitleDescriptionMixin, SlugMixin, IsActiveMixin):
+    title = models.CharField(
+        'Название',
+        help_text='Макс 70 символов',
+        max_length=70,
+        unique=True
+    )
     parent = TreeForeignKey(
         'self',
         verbose_name='Родительская категория',
@@ -30,7 +32,30 @@ class Category(MPTTModel, TitleDescriptionMixin):
         verbose_name_plural = 'Категории'
 
 
-class Conference(TitleDescriptionMixin):
+
+class ConferenceManager(models.Manager):
+    def get_active(self):
+        queryset = self.get_queryset().filter(is_active=True)
+        
+        return queryset
+    
+    def get_conference_with_lectures(self):
+        queryset = self.get_active().prefetch_related(
+            Prefetch('lectures', queryset=Lecture.objects.filter(is_active=True))
+        )
+        
+        return queryset
+            
+    def get_conference_with_lectures_and_category(self):
+        queryset = self.get_active().prefetch_related(
+            Prefetch('lectures', queryset=Lecture.objects.filter(is_active=True))
+        ).select_related('category').only('title', 'category__title')
+        
+        return queryset
+
+
+
+class Conference(TitleDescriptionMixin, SlugMixin, IsActiveMixin):
     date = models.DateField('Дата проведения')
     category = models.ForeignKey(
         Category,
@@ -39,7 +64,7 @@ class Conference(TitleDescriptionMixin):
         related_name='conferences',
         null=True
     )
-
+    
     def __str__(self):
         return self.title[:20]
 
@@ -47,8 +72,10 @@ class Conference(TitleDescriptionMixin):
         verbose_name = 'Конференция'
         verbose_name_plural = 'Конференции'
 
+    objects = ConferenceManager()
 
-class Lecture(TitleDescriptionMixin):
+
+class Lecture(TitleDescriptionMixin, SlugMixin, IsActiveMixin):
     desired_time = models.DateTimeField(
         'Желаемое время',
         null=True,
@@ -56,7 +83,7 @@ class Lecture(TitleDescriptionMixin):
     )
     file = models.FileField(
         'Презентация',
-        storage=storage
+        upload_to='uploads'
     )
     conference = models.ForeignKey(
         Conference,
@@ -71,13 +98,14 @@ class Lecture(TitleDescriptionMixin):
         related_name='lectures',
         null=True
     )
+    confirmed = models.BooleanField(
+        'Утверждена',
+        default=False
+    )
 
     def __str__(self):
         return self.title[:20]
 
     class Meta:
         verbose_name = 'Доклад'
-        # verbose_name_plural = 'Доклады'
-        # constraints = [
-        #     models.CheckConstraint(check=Q(category__parent=Conference.category), name='age_gte_18')
-        # ]
+        verbose_name_plural = 'Доклады'

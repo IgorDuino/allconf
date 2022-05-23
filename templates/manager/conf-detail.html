@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Подробное описание товара{% endblock %}
+{% block content %}
+    <h1 class="heading">Подробное описание Конференции</h1>
+    <div class="card">
+        <p>Название: {{ conf.title }}</p>
+        <p>Категория: {{ conf.category.title }}</p>
+        <ul>Лекции: 
+            {% for lecture in conf.lectures.all %}
+                <li>{{ lecture.title }}</li>
+            {% empty %}
+                <p>Пусто</p>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

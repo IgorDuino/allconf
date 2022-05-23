@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+    <h1 class="heading">Мы рекомендуем:</h1>
+    <form action="{% url 'homepage:home' %}" method="post">
+        {% csrf_token %}
+
+        <input type="text" name="search"/>
+        
+        <ul class="list-group">
+            {% for category in categories %}
+                <li class="list-group-item">
+                    <input type="checkbox" name="{{ category.slug }}"
+                     {% if article.published %}checked{% endif %}/>
+                    <label for="{{ category.skug }}">{{ category.title }}</label>
+                </li>
+            {% empty %}
+                <p>Список пуст. Эй, админ, добавь инфы!</p>
+            {% endfor %}
+        </ul>
+        <input type="submit" value="OK" class="btn btn-primary d-block w-100">
+    </form>
+    {% load get_model_name %}
+    <ul class="list-group">
+        {% for item in search_list %}
+            {% if item|model_name == 'Conference' %}
+                <a href="{% url 'manager:conf-detail' item.slug  %}">
+                    <li class="list-group-item">
+                        {{ item.title }}
+                    </li>
+                </a>
+            {% else %}
+                <a href="{% url 'manager:lecture-detail' item.conference.slug item.slug   %}">
+                    <li class="list-group-item">
+                        {{ item.title }}
+                    </li>
+                </a>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,21 @@
+<header>
+    <nav class="navbar navbar-light navbar-expand-md" style="color: var(--bs-blue);background: var(--bs-gray-400);border-style: none;border-color: var(--bs-indigo);">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'homepage:home' %}">AllConf</a>
+            <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
+                <span class="visually-hidden">Toggle navigation</span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-flex flex-row-reverse" id="navcol-1">
+                <ul class="navbar-nav">
+                    {% if request.user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'users:profile' %}">Профиль</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'users:login' %}">Войти</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'users:signup' %}">Регистрация</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

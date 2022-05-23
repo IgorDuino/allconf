@@ -24,7 +24,8 @@ INSTALLED_APPS = [
     'manager.apps.ManagerConfig',
     'users.apps.UsersConfig',
 
-    'debug_toolbar'
+    'debug_toolbar',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +133,9 @@ LOGOUT_REDIRECT_URL = '/auth/login/'
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOGIN_URL = '/auth/login/'
+LOGIN_REDIRECT_URL = '/auth/profile/'
+LOGOUT_REDIRECT_URL = '/auth/login/'

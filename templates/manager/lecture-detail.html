@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Подробное описание товара{% endblock %}
+{% block content %}
+    <h1 class="heading">Подробное описание Лекции</h1>
+    <div class="card">
+        <p>Название: {{ lecture.title }}</p>
+        <p>Категория: {{ lecture.category.title }}</p>
+    </div>
+{% endblock %}
