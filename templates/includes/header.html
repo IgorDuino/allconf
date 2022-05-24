@@ -1,20 +1,19 @@
+{% load static %}
+
 <header>
-    <nav class="navbar navbar-light navbar-expand-md" style="color: var(--bs-blue);background: var(--bs-gray-400);border-style: none;border-color: var(--bs-indigo);">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'homepage:home' %}">AllConf</a>
-            <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
-                <span class="visually-hidden">Toggle navigation</span>
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-flex flex-row-reverse" id="navcol-1">
-                <ul class="navbar-nav">
+    <nav class="navbar navbar-light navbar-expand-md navbar-fixed-top navigation-clean-button" style="background: rgb(34, 34, 34);border-radius: 20;border-top-left-radius: 20;border-top-right-radius: 20;border-bottom-right-radius: 20;border-bottom-left-radius: 20;border-style: none;padding-top: 0;padding-bottom: 10px;">
+        <div class="container"><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2" style="color: var(--bs-pink);"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon" style="color: var(--bs-pink);"></span></button>
+            <div><a class="navbar-brand" href="{% url 'homepage:home' %}"><span>AllConf</span> </a></div>
+            <div class="collapse navbar-collapse" id="navcol-2" style="color: rgb(255,255,255);">
+                <ul class="navbar-nav nav-right"></ul>
+                <p class="ms-auto navbar-text actions">
                     {% if request.user.is_authenticated %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'users:profile' %}">Профиль</a></li>
+                        <a class="login" href="{% url 'users:profile' %}" style="color: rgba(224,217,217,0.9);">Profile</a>
                     {% else %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'users:login' %}">Войти</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'users:signup' %}">Регистрация</a></li>
+                        <a class="login" href="{% url 'users:login' %}" style="color: rgba(224,217,217,0.9);">Log In</a>
+                        <a class="btn btn-light action-button" role="button" href="{% url 'users:signup' %}" style="color: rgba(0,0,0,0.9);background: var(--bs-gray-200);border-radius: 10px;border-style: solid;border-color: rgba(0,0,0,0.9);font-size: 16px;padding: 5px 8px;">Sign Up</a>
                     {% endif %}
-                </ul>
+                </p>
             </div>
         </div>
     </nav>

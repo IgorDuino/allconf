@@ -48,6 +48,12 @@ class SignupView(View):
 class ProfileView(View):
     form_class = ProfileForm
     template_name = 'users/profile.html'
+    
+    @staticmethod
+    def get_queryset(request):
+        user = User.objects.filter(id=request.user.id)
+
+        return user[0]
 
     def get(self, request):
         form = self.form_class()

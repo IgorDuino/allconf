@@ -4,7 +4,7 @@ from django.views.generic import View, FormView
 from manager.models import Category, Lecture, Conference
 from django.shortcuts import get_object_or_404
 from manager.forms import ConferenceCreateForm, LectureCreateForm
-from users.models import ConferenceOrganizer, Speaker
+from users.models import ConferenceOrganizer, Speaker, Listener
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
@@ -15,6 +15,30 @@ class ConfView(View):
     def get(self, request, conf_slug):
         conference = get_object_or_404(Conference.objects.get_conference_with_lectures_and_category(), 
                                        slug=conf_slug)
+        
+        context = {
+            'conf': conference
+        }
+
+        return render(request, template_name=self.template_name, context=context)
+    
+    
+    @method_decorator(login_required)
+    def post(self, request, conf_slug):
+        conference = get_object_or_404(Conference.objects.get_conference_with_lectures_and_category(), 
+                                       slug=conf_slug)
+
+        if request.POST.get('speaker'):
+            return HttpResponseRedirect(reverse('manager:lecture-create'))
+        if request.POST.get('listener'):
+            listener = Listener.objects.filter(user=request.user, conference=conference)
+            if len(listener) == 0:
+                Listener.objects.create(
+                    conference=conference,
+                    user=request.user
+                )
+                
+                return HttpResponseRedirect(reverse('users:profile'))
         
         context = {
             'conf': conference
@@ -130,7 +154,7 @@ class CreateLectureView(View):
                     lecture=lecture
                 )
             
-                return HttpResponseRedirect(reverse('manager:lecture-detail', kwargs={'conf_slug': slug, 'lecture_slug': slug}))
+                return HttpResponseRedirect(reverse('manager:lecture-detail', kwargs={'conf_slug': conference.slug, 'lecture_slug': slug}))
         
         context = {
             'form': form

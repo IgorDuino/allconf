@@ -52,7 +52,7 @@ class ConferenceManager(models.Manager):
     def get_conference_with_lectures_and_category(self):
         queryset = self.get_active().prefetch_related(
             Prefetch('lectures', queryset=Lecture.objects.filter(is_active=True))
-        ).select_related('category').only('title', 'category__title')
+        ).select_related('category')
         
         return queryset
 
@@ -97,14 +97,14 @@ class Conference(TitleDescriptionMixin, SlugMixin, IsActiveMixin):
 
 
 class Lecture(TitleDescriptionMixin, SlugMixin, IsActiveMixin):
-    desired_time = models.DateTimeField(
+    desired_time = models.TimeField(
         'Желаемое время',
         null=True,
         blank=True
     )
     file = models.FileField(
         'Презентация',
-        upload_to='uploads',
+        upload_to='files',
         validators=[FileExtensionValidator(allowed_extensions=['pdf'])]
     )
     conference = models.ForeignKey(

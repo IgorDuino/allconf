@@ -10,9 +10,7 @@ class TitleDescriptionMixin(models.Model):
     )
     
     description = models.TextField(
-        'Описание',
-        null=True,
-        blank=True
+        'Описание'
     )
 
     class Meta:
