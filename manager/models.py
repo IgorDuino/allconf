@@ -2,6 +2,9 @@ from django.db import models
 from django.db.models import Prefetch
 from core.models import TitleDescriptionMixin, SlugMixin, IsActiveMixin
 from mptt.models import MPTTModel, TreeForeignKey
+from sorl.thumbnail import get_thumbnail
+from django.utils.html import mark_safe
+from django.core.validators import FileExtensionValidator
 
 
 class Category(MPTTModel, TitleDescriptionMixin, SlugMixin, IsActiveMixin):
@@ -64,6 +67,24 @@ class Conference(TitleDescriptionMixin, SlugMixin, IsActiveMixin):
         related_name='conferences',
         null=True
     )
+    upload = models.ImageField(
+        'Главное изображение',
+        upload_to='uploads/',
+        null=True
+    )
+    
+    def get_image_x1280(self):
+        return get_thumbnail(self.upload, '1280', quality=51)
+
+    def get_image_400x300(self):
+        return get_thumbnail(self.upload, '400x300', crop='center', quality=51)
+
+    def image_tmb(self):
+        if self.upload:
+            return mark_safe(
+                f'<img src="{self.upload.url}", width="50">'
+            )
+        return 'Нет изображения'
     
     def __str__(self):
         return self.title[:20]
@@ -83,7 +104,8 @@ class Lecture(TitleDescriptionMixin, SlugMixin, IsActiveMixin):
     )
     file = models.FileField(
         'Презентация',
-        upload_to='uploads'
+        upload_to='uploads',
+        validators=[FileExtensionValidator(allowed_extensions=['pdf'])]
     )
     conference = models.ForeignKey(
         Conference,

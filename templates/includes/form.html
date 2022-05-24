@@ -2,7 +2,7 @@
 
 <section class="form_section">
     <div class="form">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form|crispy }}
             <input type="submit" value="OK" class="btn btn-primary d-block w-100">

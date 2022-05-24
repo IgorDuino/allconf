@@ -26,6 +26,8 @@ INSTALLED_APPS = [
 
     'debug_toolbar',
     'crispy_forms',
+    'sorl.thumbnail',
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
@@ -100,6 +102,8 @@ EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
 
 DATE_FORMAT = ['%d/%m/%Y']
 DATE_INPUT_FORMATS = ['%d/%m/%Y']
+DATETIME_FORMAT = ['%d/%m/%Y %H:%M']
+DATETIME_INPUT_FORMATS = ['%d/%m/%Y %H:%M']
 
 LANGUAGE_CODE = 'ru'
 
@@ -120,6 +124,11 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+FILE_UPLOAD_HANDLERS = [
+    'django.core.files.uploadhandler.MemoryFileUploadHandler',
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+]
 
 # Default primary key field type
 
