@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Мой профиль{% endblock %}
+{% block content %}
+    <div class="container">
+        <h1>Профиль</h1>
+        <div class="row">
+            <div class="col">
+                <p>{{ user.username }}</p>
+                {% include 'includes/form.html' %}
+            </div>
+            <div class="col-xl-9">
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                <h3 style="font-size: 25px;">Посещенные конференции</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                {% for conf in visited %}
+                                    <div class="row">
+                                        <div class="col-xl-2"><img></div>
+                                        <div class="col">
+                                            <p style="font-weight: bold;font-size: 20px;">{{ conf.title }}</p>
+                                            <p style="font-size: 12px;">{{ conf.description }}</p>
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <p>{{ conf.date }}</p>
+                                        </div>
+                                    </div>
+                                {% empty %}
+                                    <p>Вы ещё не посещали конференции</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                <h3 style="font-size: 25px;">Мои доклады</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                {% for lecture in lectures %}
+                                    <div class="row">
+                                        <div class="col-xl-2"><img></div>
+                                        <div class="col">
+                                            <p style="font-weight: bold;font-size: 20px;">{{ lecture.title }}</p>
+                                            <p style="font-size: 12px;">{{ lecture.description }}</p>
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <p>{{ lecture.conference.date }}</p>
+                                        </div>
+                                    </div>
+                                {% empty %}
+                                    <p>У вас ещё нет лекций</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col">
+                                <h3 style="font-size: 25px;">Мои конференции</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                {% for conf in conferences %}
+                                    <div class="row">
+                                        <div class="col-xl-2"><img></div>
+                                        <div class="col">
+                                            <p style="font-weight: bold;font-size: 20px;">{{ conf.title }}</p>
+                                            <p style="font-size: 12px;">{{ conf.description }}</p>
+                                        </div>
+                                        <div class="col-xl-2">
+                                            <p>{{ conf.date }}</p>
+                                        </div>
+                                    </div>
+                                {% empty %}
+                                    <p>У вас нет конференций</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

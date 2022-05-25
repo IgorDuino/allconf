@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Информация о пользователе{% endblock %}
+{% block content %}
+    <h1 class="heading">Информация о пользователе</h1>
+     <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">{{ user.email }}</h4>
+            <h6 class="text-muted card-subtitle mb-2">{{ user.first_name }} {{ user.last_name }}</h6>
+            <p class="card-text">{{ user.profile.birthday }}</p>
+            <h5 class="card-subtitle mb-2">Любимые товары:</h5>
+            <ul class="list-group">
+                {% for rating in user.ratings.all %}
+                     {% with item=rating.item %}
+                         <li class="list-group-item">
+                            {% include "includes/item_card.html" %}
+                        </li>
+                     {% endwith %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

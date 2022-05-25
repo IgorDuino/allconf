@@ -21,7 +21,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'debug_toolbar'
+    'manager.apps.ManagerConfig',
+    'users.apps.UsersConfig',
+
+    'debug_toolbar',
+    'crispy_forms',
+    'sorl.thumbnail',
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
@@ -61,8 +67,12 @@ WSGI_APPLICATION = 'all_conference.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': config('DB_NAME'),
+        'USER' : config('DB_USER'),
+        'PASSWORD' : config('DB_PASSWORD'),
+        'HOST' : config('DB_HOST'),
+        'PORT' : config('DB_PORT'),
     }
 }
 
@@ -85,14 +95,21 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+AUTH_USER_MODEL = 'auth.User'
+
+
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
 
 
 # Internationalization
 
-DATE_FORMAT = ['%d/%m/%Y']
-DATE_INPUT_FORMATS = ['%d/%m/%Y']
+DATE_FORMAT = ['%d.%m.%Y']
+DATE_INPUT_FORMATS = ['%d.%m.%Y']
+TIME_FORMAT = ['%H:%M']
+TIME_INPUT_FORMATS = ['%H:%M']
+DATETIME_FORMAT = ['%d.%m.%Y %H:%M']
+DATETIME_INPUT_FORMATS = ['%d.%m.%Y %H:%M']
 
 LANGUAGE_CODE = 'ru'
 
@@ -114,6 +131,11 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+FILE_UPLOAD_HANDLERS = [
+    'django.core.files.uploadhandler.MemoryFileUploadHandler',
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+]
+
 # Default primary key field type
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -126,3 +148,9 @@ LOGOUT_REDIRECT_URL = '/auth/login/'
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOGIN_URL = '/auth/login/'
+LOGIN_REDIRECT_URL = '/auth/profile/'
+LOGOUT_REDIRECT_URL = '/auth/login/'
