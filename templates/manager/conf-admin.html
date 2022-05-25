@@ -15,10 +15,16 @@
                     {% for lecture in conf.lectures.all %}
                         <div class="row">
                             <div class="col d-flex justify-content-between align-items-center align-content-center">
-                                <p>{{ lecture.time }}</p><a href="{% url 'manager:lecture-detail' conf.slug lecture.slug %}">
+                                {% if lecture.confirmed %}
+                                    <p>{{ lecture.time }}</p>
+                                {% else %}
+                                    <p> Желаемое время: {{ lecture.desired_time }}</p>
+                                {% endif %}
+                                <a href="{% url 'manager:lecture-detail' conf.slug lecture.slug %}">
                                     <p>{{ lecture.title }}</p>
-                                </a><a href="{{ lecture.file.url }}")>
-                                <p>Скачать доклад</p>
+                                </a>
+                                <a href="{{ lecture.file.url }}")>
+                                    <p>Скачать доклад</p>
                                 </a>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="{{ lecture.slug }}_active" {% if lecture.confirmed %} Checked {% endif %}>
