@@ -22,7 +22,10 @@ class SignupView(View):
             'form': form
         }
 
-        return render(request, template_name=self.template_name, context=context)
+        return render(
+            request,
+            template_name=self.template_name,
+            context=context)
 
     def post(self, request):
         form = self.form_class(request.POST)
@@ -36,20 +39,24 @@ class SignupView(View):
 
             if len(user) == 0:
                 if password == repeat_password:
-                    User.objects.create_user(username=username, email=email, password=password)
+                    User.objects.create_user(
+                        username=username, email=email, password=password)
 
         context = {
             'form': form
         }
 
-        return render(request, template_name=self.template_name, context=context)
+        return render(
+            request,
+            template_name=self.template_name,
+            context=context)
 
 
 @method_decorator(login_required, name='dispatch')
 class ProfileView(View):
     form_class = ProfileForm
     template_name = 'users/profile.html'
-    
+
     @staticmethod
     def get_queryset(request):
         user = User.objects.filter(id=request.user.id)
@@ -59,12 +66,15 @@ class ProfileView(View):
     def get(self, request):
         form = self.form_class()
 
-        conferences = list(map(lambda x: x.conference, ConferenceOrganizer.objects.filter(user=request.user))) + list(map(lambda x: x.conference,ConferenceModerator.objects.filter(user=request.user)))
-        lectures = list(map(lambda x: x.lecture, Speaker.objects.filter(user=request.user)))
-        visited = list(map(lambda x: x.conference, Listener.objects.filter(user=request.user)))
-        
+        conferences = list(map(lambda x: x.conference, ConferenceOrganizer.objects.filter(
+            user=request.user))) + list(map(lambda x: x.conference, ConferenceModerator.objects.filter(user=request.user)))
+        lectures = list(map(lambda x: x.lecture,
+                            Speaker.objects.filter(user=request.user)))
+        visited = list(map(lambda x: x.conference,
+                           Listener.objects.filter(user=request.user)))
+
         print(conferences)
-        
+
         context = {
             'form': form,
             'user': self.get_queryset(request),
@@ -73,17 +83,28 @@ class ProfileView(View):
             'visited': visited
         }
 
-        return render(request, template_name=self.template_name, context=context)
+        return render(
+            request,
+            template_name=self.template_name,
+            context=context)
 
     def post(self, request):
         form = self.form_class(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
 
-        conferences = ConferenceOrganizer.objects.filter(user=request.user).values_list('conference', flat=True) + ConferenceModerator.objects.filter(user=request.user).values_list('conference', flat=True)
-        lectures = Speaker.objects.filter(user=request.user).values_list('lectures', flat=True)
-        visited = Listener.objects.filter(user=request.user).values_list('conferences', flat=True)
-        
+        conferences = ConferenceOrganizer.objects.filter(
+            user=request.user).values_list(
+            'conference', flat=True) + ConferenceModerator.objects.filter(
+            user=request.user).values_list(
+                'conference', flat=True)
+        lectures = Speaker.objects.filter(
+            user=request.user).values_list(
+            'lectures', flat=True)
+        visited = Listener.objects.filter(
+            user=request.user).values_list(
+            'conferences', flat=True)
+
         context = {
             'form': form,
             'user': self.get_queryset(request),
@@ -92,4 +113,7 @@ class ProfileView(View):
             'visited': visited
         }
 
-        return render(request, template_name=self.template_name, context=context)
+        return render(
+            request,
+            template_name=self.template_name,
+            context=context)

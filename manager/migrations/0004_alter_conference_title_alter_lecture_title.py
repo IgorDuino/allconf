@@ -13,11 +13,17 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='conference',
             name='title',
-            field=models.CharField(help_text='Макс 70 символов', max_length=70, verbose_name='Название'),
+            field=models.CharField(
+                help_text='Макс 70 символов',
+                max_length=70,
+                verbose_name='Название'),
         ),
         migrations.AlterField(
             model_name='lecture',
             name='title',
-            field=models.CharField(help_text='Макс 70 символов', max_length=70, verbose_name='Название'),
+            field=models.CharField(
+                help_text='Макс 70 символов',
+                max_length=70,
+                verbose_name='Название'),
         ),
     ]

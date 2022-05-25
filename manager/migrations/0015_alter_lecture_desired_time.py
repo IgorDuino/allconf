@@ -13,6 +13,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='lecture',
             name='desired_time',
-            field=models.TimeField(blank=True, null=True, verbose_name='Желаемое время'),
+            field=models.TimeField(
+                blank=True,
+                null=True,
+                verbose_name='Желаемое время'),
         ),
     ]

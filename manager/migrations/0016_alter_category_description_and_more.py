@@ -14,26 +14,36 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='category',
             name='description',
-            field=models.TextField(verbose_name='Описание'),
+            field=models.TextField(
+                verbose_name='Описание'),
         ),
         migrations.AlterField(
             model_name='conference',
             name='description',
-            field=models.TextField(verbose_name='Описание'),
+            field=models.TextField(
+                verbose_name='Описание'),
         ),
         migrations.AlterField(
             model_name='conference',
             name='upload',
-            field=models.ImageField(upload_to='uploads/', verbose_name='Главное изображение'),
+            field=models.ImageField(
+                upload_to='uploads/',
+                verbose_name='Главное изображение'),
         ),
         migrations.AlterField(
             model_name='lecture',
             name='description',
-            field=models.TextField(verbose_name='Описание'),
+            field=models.TextField(
+                verbose_name='Описание'),
         ),
         migrations.AlterField(
             model_name='lecture',
             name='file',
-            field=models.FileField(upload_to='files/', validators=[django.core.validators.FileExtensionValidator(allowed_extensions=['pdf'])], verbose_name='Презентация'),
+            field=models.FileField(
+                upload_to='files/',
+                validators=[
+                    django.core.validators.FileExtensionValidator(
+                        allowed_extensions=['pdf'])],
+                verbose_name='Презентация'),
         ),
     ]

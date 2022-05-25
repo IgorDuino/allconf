@@ -13,6 +13,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='lecture',
             name='confirmed',
-            field=models.BooleanField(default=False, verbose_name='Утверждена'),
+            field=models.BooleanField(
+                default=False,
+                verbose_name='Утверждена'),
         ),
     ]

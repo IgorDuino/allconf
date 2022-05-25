@@ -13,6 +13,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='lecture',
             name='file',
-            field=models.FileField(upload_to='files/', verbose_name='Презентация'),
+            field=models.FileField(
+                upload_to='files/',
+                verbose_name='Презентация'),
         ),
     ]

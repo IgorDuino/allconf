@@ -33,7 +33,7 @@ class ConferenceOrganizer(models.Model):
         verbose_name='Конференция',
         on_delete=models.CASCADE
     )
-    
+
     class Meta:
         verbose_name = 'Организатор'
         verbose_name_plural = 'Организаторы'
@@ -95,7 +95,7 @@ class Listener(models.Model):
         on_delete=models.CASCADE,
         related_name='listeners'
     )
-    
+
     class Meta:
         verbose_name = 'Посетитель'
         verbose_name_plural = 'Посетители'

@@ -6,14 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('manager', '0005_alter_category_title_alter_conference_title_and_more'),
-    ]
+        ('manager', '0005_alter_category_title_alter_conference_title_and_more'), ]
 
     operations = [
         migrations.AddField(
             model_name='category',
             name='slug',
-            field=models.SlugField(default=None, unique=True, verbose_name='URL'),
+            field=models.SlugField(
+                default=None,
+                unique=True,
+                verbose_name='URL'),
             preserve_default=False,
         ),
     ]

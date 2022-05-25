@@ -25,4 +25,3 @@ class ListenerAdmin(admin.ModelAdmin):
 class SpeakerAdmin(admin.ModelAdmin):
     list_display = ('user', 'lecture')
     list_display_links = ('user', )
-

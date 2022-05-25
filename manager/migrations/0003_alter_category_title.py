@@ -6,13 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('manager', '0002_category_lft_category_mptt_level_category_rght_and_more'),
-    ]
+        ('manager', '0002_category_lft_category_mptt_level_category_rght_and_more'), ]
 
     operations = [
         migrations.AlterField(
             model_name='category',
             name='title',
-            field=models.CharField(help_text='Макс 150 символов', max_length=150, unique=True, verbose_name='Название'),
+            field=models.CharField(
+                help_text='Макс 150 символов',
+                max_length=150,
+                unique=True,
+                verbose_name='Название'),
         ),
     ]

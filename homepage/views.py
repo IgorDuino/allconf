@@ -10,15 +10,16 @@ class HomeView(TemplateView):
 
 class SearchView(View):
     template_name = 'homepage/search.html'
-    
+
     def get(self, request):
-        lectures = Lecture.objects.filter(is_active=True, confirmed=True).select_related('category')
-        conference = Conference.objects.filter(is_active=True).select_related('category')
-        
+        conference = Conference.objects.filter(
+            is_active=True).select_related('category')
+
         search_text = request.GET.get('search', '')
-        
-        search_list = list(lectures) + list(conference)
-        search_list = process.extract(search_text, search_list, limit=len(search_list))
+
+        search_list = list(conference)
+        search_list = process.extract(
+            search_text, search_list, limit=len(search_list))
         search_list.sort(key=lambda x: x[1], reverse=True)
         search_list = list(map(lambda x: x[0], search_list))
 
@@ -27,4 +28,7 @@ class SearchView(View):
             'search_phrase': search_text
         }
 
-        return render(request, template_name=self.template_name, context=context)
+        return render(
+            request,
+            template_name=self.template_name,
+            context=context)
