@@ -68,11 +68,11 @@ WSGI_APPLICATION = 'all_conference.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'allconf_database',
-        'USER' : 'allconf_user',
-        'PASSWORD' : 'sno83jnlnd%2j',
-        'HOST' : 'cupsoft.ru',
-        'PORT' : '5432',
+        'NAME': config('DB_NAME'),
+        'USER' : config('DB_USER'),
+        'PASSWORD' : config('DB_PASSWORD'),
+        'HOST' : config('DB_HOST'),
+        'PORT' : config('DB_PORT'),
     }
 }
 

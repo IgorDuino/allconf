@@ -6,6 +6,11 @@
 <section class="conf-detail" style="background: linear-gradient(rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.35)),
 url({{ conf.get_image_x1280.url }}) center / cover;">
     <header class="text-center text-white masthead" style="background: rgba(52,58,64,0);">
+        {% if user.is_authenticated %}
+            <a href="{% url 'manager:conf-admin' conf.slug %}">
+                <button type="submit" name="admin" class="btn btn-primary" style="font-size: 23px;font-weight: bold;border-radius: 4px;">Изменить конференцию</button>
+            </a>
+        {% endif %}
         <div class="container">
             <div class="row" style="margin-bottom: 86px;">
                 <div class="col-xl-9 mx-auto position-relative">
@@ -14,8 +19,8 @@ url({{ conf.get_image_x1280.url }}) center / cover;">
                     <h5 class="mb-5" style="color: var(--bs-white);">тема: {{ conf.category.title }}</h5>
                     <form method="post">
                         {% csrf_token %}
-                        <input type="submit" name="speaker" class="btn btn-primary" style="font-size: 23px;font-weight: bold;border-radius: 4px;" value="Я докладчик"></input>
-                        <input type="submit" name="listener" class="btn btn-primary" style="font-size: 23px;font-weight: bold;border-radius: 4px;margin-left: 74px;" value="Я посетитель"></input>
+                        <input type="submit" name="speaker" class="btn btn-primary" style="font-size: 23px;font-weight: bold;border-radius: 4px;" value="Я докладчик">
+                        <input type="submit" name="listener" class="btn btn-primary" style="font-size: 23px;font-weight: bold;border-radius: 4px;margin-left: 74px;" value="Я посетитель">
                     </form>
                 </div>
             </div>

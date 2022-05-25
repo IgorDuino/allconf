@@ -12,13 +12,10 @@ class SearchView(View):
     template_name = 'homepage/search.html'
     
     def get(self, request):
-        return render(request, template_name=self.template_name)
-    
-    def post(self, request):
         lectures = Lecture.objects.filter(is_active=True, confirmed=True).select_related('category')
         conference = Conference.objects.filter(is_active=True).select_related('category')
         
-        search_text = request.POST.get('search')
+        search_text = request.GET.get('search')
         
         search_list = list(lectures) + list(conference)
         search_list = process.extract(search_text, search_list, limit=len(search_list))
