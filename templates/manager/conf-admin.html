@@ -3,35 +3,36 @@
 
 {% block title %}Модерирование конференции{% endblock %}
 {% block content %}
-<section class="conf-detail" style="background: linear-gradient(rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.35)),
-url({{ conf.get_image_x1280.url }}) center / cover;">
-    <header style="background: rgba(52,58,64,0);">
-        <div class="container">
-            {% include "includes/form.html" %}
-            <div class="row">
-                <div class="col-xl-9 mx-auto position-relative text-center text-white">
-                    <form method="post">
-                        {% csrf_token %}
-                        <div class="d-flex justify-content-between" style="background: #ffffff;margin-bottom: 16px;">
-                            {% for lecture in conf.lectures.all %}
-                                {% if lecture.confirmed %}
-                                    <p style="color: var(--bs-indigo);">Время лекции: {{ lecture.time }}</p>
-                                {% else %}
-                                    <p style="color: var(--bs-indigo);">Желаемое время: {{ lecture.desired_time }}</p>
-                                {% endif %}
-                                <a href="{% url 'manager:lecture-detail' conf.slug lecture.slug %}" style="color: var(--bs-indigo);">{{ lecture.title }}</a>
-                                <p style="color: var(--bs-indigo);">{{ lecture.speaker.user.username }}</p>
-                                <input name="{{ lecture.slug }}_active" type="checkbox" class="checkbox" {% if lecture.confirmed %} Checked {% endif %}>
-                                <input name="{{ lecture.slug }}" type="time">
-                            {% empty %}
-                                <p>Пока нет лекций</p>
-                            {% endfor %}
+    <div class="container">
+        <h3>Управление конференцией {{ conf.title }}</h3>
+        <div class="row">
+            <div class="col-xl-4">
+                {% include "includes/form.html" %}
+            </div>
+            <div class="col">
+                <form method="post">
+                    {% csrf_token %}
+                    {% for lecture in conf.lectures.all %}
+                        <div class="row">
+                            <div class="col d-flex justify-content-between align-items-center align-content-center">
+                                <p>{{ lecture.time }}</p><a href="{% url 'manager:lecture-detail' conf.slug lecture.slug %}">
+                                    <p>{{ lecture.title }}</p>
+                                </a><a href="{{ lecture.file.url }}")>
+                                <p>Скачать доклад</p>
+                                </a>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="{{ lecture.slug }}_active" {% if lecture.confirmed %} Checked {% endif %}>
+                                    <label class="form-check-label" for="{{ lecture.slug }}">Активна</label>
+                                </div>
+                                <input type="time" name="{{ lecture.slug }}">
+                            </div>
                         </div>
-                        <input type="submit" name="time_manager" class="btn btn-primary" style="font-size: 23px;font-weight: bold;border-radius: 4px;" value="Сохранить">
-                    </form>
-                </div>
+                    {% empty %}
+                        <p>Пока нет лекций</p>
+                    {% endfor %}
+                    <input type="submit" name="time_manager" class="btn btn-primary" style="font-size: 23px;font-weight: bold;border-radius: 4px;" value="Сохранить">
+                </form>
             </div>
         </div>
-    </header>
-</section>
+    </div>
 {% endblock %}

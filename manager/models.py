@@ -55,6 +55,14 @@ class ConferenceManager(models.Manager):
         ).select_related('category')
         
         return queryset
+    
+    def get_conference_with_all_lectures_and_category(self):
+        queryset = self.get_active().prefetch_related(
+            Prefetch('lectures', queryset=Lecture.objects.filter(is_active=True))
+        ).select_related('category')
+        
+        return queryset
+
 
 
 

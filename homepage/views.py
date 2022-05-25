@@ -15,7 +15,7 @@ class SearchView(View):
         lectures = Lecture.objects.filter(is_active=True, confirmed=True).select_related('category')
         conference = Conference.objects.filter(is_active=True).select_related('category')
         
-        search_text = request.GET.get('search')
+        search_text = request.GET.get('search', '')
         
         search_list = list(lectures) + list(conference)
         search_list = process.extract(search_text, search_list, limit=len(search_list))
@@ -23,7 +23,8 @@ class SearchView(View):
         search_list = list(map(lambda x: x[0], search_list))
 
         context = {
-            'search_list': search_list
+            'search_list': search_list,
+            'search_phrase': search_text
         }
 
         return render(request, template_name=self.template_name, context=context)

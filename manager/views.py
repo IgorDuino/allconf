@@ -80,7 +80,7 @@ class ConfAdminView(View):
     
     
     def post(self, request, conf_slug):
-        conference = get_object_or_404(Conference.objects.get_conference_with_lectures_and_category(), 
+        conference = get_object_or_404(Conference.objects.get_conference_with_all_lectures_and_category(),
                                        slug=conf_slug)
 
         
@@ -104,11 +104,11 @@ class ConfAdminView(View):
                         if request.POST.get(lecture.slug):
                             time = request.POST.get(lecture.slug)
                             lecture.time = time
-                            lecture.confirmed = True
-                            lecture.save(update_fields=['time', 'confirmed'])
+                        lecture.confirmed = True
+                        lecture.save(update_fields=['time', 'confirmed'])
                     else:
                         lecture.confirmed = False
-                        lecture.save(update_fields=['time', 'confirmed'])
+                        lecture.save(update_fields=['confirmed'])
             
             context = {
                 'form': form,
