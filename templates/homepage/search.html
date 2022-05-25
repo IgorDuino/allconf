@@ -21,19 +21,12 @@
                     {% for item in search_list %}
                         <div class="col">
                             <div class="row">
-                                {% if item|model_name == 'Conference' %}
                                     <a href="{% url 'manager:conf-detail' item.slug  %}">
+                                        <img  style="width: 50%;" src="{{ item.get_image_400x300.url }}">
                                         <p style="font-size: 20px;font-weight: bold;">{{ item.title }}</p>
                                         <p style="font-size: 10px;color: var(--bs-gray-700);">{{ item.date }}</p>
                                         <p>{{ item.description }}</p>
                                     </a>
-                                {% else %}
-                                    <a href="{% url 'manager:lecture-detail' item.conference.slug item.slug %}">
-                                        <p style="font-size: 20px;font-weight: bold;">{{ item.title }}</p>
-                                        <p style="font-size: 10px;color: var(--bs-gray-700);">{{ item.time }}</p>
-                                        <p>{{ item.description }}</p>
-                                    </a>
-                                {% endif %}
                             </div>
                         </div>
                     {% endfor %}

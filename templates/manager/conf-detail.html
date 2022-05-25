@@ -24,21 +24,27 @@ url({{ conf.get_image_x1280.url }}) center / cover;">
                     </form>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-xl-9 mx-auto position-relative">
+
                     {% for lecture in conf.lectures.all %}
                         <a href="{% url 'manager:lecture-detail' conf.slug lecture.slug %}">
-                            <div class="d-flex justify-content-between" style="background: #ffffff;margin-bottom: 16px;">
-                                <p style="color: var(--bs-indigo);">{{ lecture.time }}</p>
-                                <p style="color: var(--bs-indigo);">{{ lecture.title }}</p>
-                                <p style="color: var(--bs-indigo);">{{ lecture.speaker.user.username }}</p>
-                            </div>
+                            <div class="row" style="background: var(--bs-gray-100);border-radius: 15px;margin-bottom: 20px;height: 99px;">
+                                <div class="col-xl-2 d-flex justify-content-center align-items-center">
+                                        <p style="color: var(--bs-gray-900);margin-bottom: 0px;">{{ lecture.time }}</p>
+                                    </div>
+                                    <div class="col d-flex flex-column justify-content-around align-items-center">
+                                        <p class="text-center d-xl-flex" style="color: var(--bs-gray-900);font-weight: bold;font-size: 18px;margin-bottom: 0px;"> {{ lecture.title }}</p>
+                                        <p class="text-center d-xl-flex" style="color: var(--bs-gray-900);font-size: 18px;margin-bottom: 0px;"> {{ lecture.description }}</p>
+                                    </div>
+                                    <div class="col-xl-2 d-flex justify-content-center align-items-center">
+                                        <p style="color: var(--bs-gray-900);margin-bottom: 0px;">{{ lecture.speaker.user.username }}</p>
+                                    </div>
+                                </div>
+                            <div class="row">
                         </a>
                     {% empty %}
                         <p>Пока нет лекций</p>
                     {% endfor %}
-                </div>
-            </div>
+
         </div>
     </header>
 </section>
