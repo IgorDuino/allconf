@@ -63,7 +63,7 @@ class ConfAdminView(View):
         return orginizer_permission or moderator_permission
 
     def get(self, request, conf_slug):
-        conference = get_object_or_404(Conference.objects.get_conference_with_lectures_and_category(), 
+        conference = get_object_or_404(Conference.objects.get_conference_with_all_lectures_and_category(), 
                                        slug=conf_slug)
         
         if self.check_permission(request, conference):
