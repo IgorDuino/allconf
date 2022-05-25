@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+    <h1 class="heading">Мы рекомендуем:</h1>
+    <form action="{% url 'homepage:search' %}" method="post">
+        {% csrf_token %}
+
+        <input type="text" name="search"/>
+        <input type="submit" value="Поиск" class="btn btn-primary d-block w-100">
+    </form>
+    {% load get_model_name %}
+    <ul class="list-group">
+        {% for item in search_list %}
+            {% if item|model_name == 'Conference' %}
+                <a href="{% url 'manager:conf-detail' item.slug  %}">
+                    <li class="list-group-item">
+                        {{ item.title }}
+                    </li>
+                </a>
+            {% else %}
+                <a href="{% url 'manager:lecture-detail' item.conference.slug item.slug %}">
+                    <li class="list-group-item">
+                        {{ item.title }}
+                    </li>
+                </a>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock %}

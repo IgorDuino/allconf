@@ -67,8 +67,12 @@ WSGI_APPLICATION = 'all_conference.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'allconf_database',
+        'USER' : 'allconf_user',
+        'PASSWORD' : 'sno83jnlnd%2j',
+        'HOST' : 'cupsoft.ru',
+        'PORT' : '5432',
     }
 }
 
@@ -100,10 +104,12 @@ EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'
 
 # Internationalization
 
-DATE_FORMAT = ['%d/%m/%Y']
-DATE_INPUT_FORMATS = ['%d/%m/%Y']
-DATETIME_FORMAT = ['%d/%m/%Y %H:%M']
-DATETIME_INPUT_FORMATS = ['%d/%m/%Y %H:%M']
+DATE_FORMAT = ['%d.%m.%Y']
+DATE_INPUT_FORMATS = ['%d.%m.%Y']
+TIME_FORMAT = ['%H:%M']
+TIME_INPUT_FORMATS = ['%H:%M']
+DATETIME_FORMAT = ['%d.%m.%Y %H:%M']
+DATETIME_INPUT_FORMATS = ['%d.%m.%Y %H:%M']
 
 LANGUAGE_CODE = 'ru'
 

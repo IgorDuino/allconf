@@ -4,7 +4,7 @@
 {% block title %}Подробное описание товара{% endblock %}
 {% block content %}
 <section class="conf-detail" style="background: linear-gradient(rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.35)),
-{{ conf.get_image_400x300.url }} center / cover;">
+url({{ conf.get_image_x1280.url }}) center / cover;">
     <header class="text-center text-white masthead" style="background: rgba(52,58,64,0);">
         <div class="container">
             <div class="row" style="margin-bottom: 86px;">
@@ -24,7 +24,7 @@
                     {% for lecture in conf.lectures.all %}
                         <a href="{% url 'manager:lecture-detail' conf.slug lecture.slug %}">
                             <div class="d-flex justify-content-between" style="background: #ffffff;margin-bottom: 16px;">
-                                <p style="color: var(--bs-indigo);">{{ lecture.desired_time }}</p>
+                                <p style="color: var(--bs-indigo);">{{ lecture.time }}</p>
                                 <p style="color: var(--bs-indigo);">{{ lecture.title }}</p>
                                 <p style="color: var(--bs-indigo);">{{ lecture.speaker.user.username }}</p>
                             </div>

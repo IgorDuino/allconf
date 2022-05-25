@@ -102,6 +102,11 @@ class Lecture(TitleDescriptionMixin, SlugMixin, IsActiveMixin):
         null=True,
         blank=True
     )
+    time = models.TimeField(
+        'Время',
+        null=True,
+        blank=True
+    )
     file = models.FileField(
         'Презентация',
         upload_to='files',

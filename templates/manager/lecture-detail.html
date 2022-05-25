@@ -1,10 +1,19 @@
 {% extends "base.html" %}
 
+{% load static %}
 {% block title %}Подробное описание товара{% endblock %}
 {% block content %}
-    <h1 class="heading">Подробное описание Лекции</h1>
-    <div class="card">
-        <p>Название: {{ lecture.title }}</p>
-        <p>Категория: {{ lecture.category.title }}</p>
-    </div>
+    <header class="text-center text-white masthead" style="background: linear-gradient(rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.35)), url({% static '/assets/img/konf.jpg' %}) center / cover;background-size: auto, cover;height: 80%;">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-9 mx-auto position-relative">
+                    <h1 class="mb-5">{{ lecture.title }} - {{ lecture.description }}</h1>
+                    <h5 class="mb-5" style="color: var(--bs-gray);">автор: {{ lecture.speaker.user.username }}</h5>
+                    <h5 class="mb-5" style="color: var(--bs-gray);">тема: {{ lecture.category.title }}</h5>
+                </div>
+            </div>
+        </div>
+        <a href="{% url 'manager:conf-detail' lecture.conference.slug %}" class="col-12 col-md-3"><button class="btn btn-primary btn-lg" type="submit" style="font-size: 23px;font-weight: bold;border-radius: 4px;">Регестрация!</button></a>
+    </header>
 {% endblock %}
