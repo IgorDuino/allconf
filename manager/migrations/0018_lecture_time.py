@@ -13,6 +13,9 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='lecture',
             name='time',
-            field=models.TimeField(blank=True, null=True, verbose_name='Время'),
+            field=models.TimeField(
+                blank=True,
+                null=True,
+                verbose_name='Время'),
         ),
     ]

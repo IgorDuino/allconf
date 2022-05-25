@@ -8,7 +8,7 @@ class TitleDescriptionMixin(models.Model):
         max_length=150,
         unique=True
     )
-    
+
     description = models.TextField(
         'Описание'
     )
@@ -23,16 +23,16 @@ class SlugMixin(models.Model):
         max_length=50,
         unique=True
     )
-    
+
     class Meta:
         abstract = True
-    
+
 
 class IsActiveMixin(models.Model):
     is_active = models.BooleanField(
         'Активно',
         default=False
     )
-    
+
     class Meta:
         abstract = True

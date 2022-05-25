@@ -13,6 +13,9 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='conference',
             name='upload',
-            field=models.ImageField(null=True, upload_to='uploads/', verbose_name='Главное изображение'),
+            field=models.ImageField(
+                null=True,
+                upload_to='uploads/',
+                verbose_name='Главное изображение'),
         ),
     ]

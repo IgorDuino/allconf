@@ -11,9 +11,9 @@ User = get_user_model()
 class ConferenceCreateForm(forms.ModelForm):
     date = forms.DateField(
         label='Дата проведения',
-        widget=TextInput(attrs={'type': 'date',})
+        widget=TextInput(attrs={'type': 'date', })
     )
-    
+
     class Meta:
         model = Conference
         fields = ('title', 'description', 'slug', 'category', 'date', 'upload')
@@ -25,7 +25,6 @@ class ConferenceChangeForm(forms.ModelForm):
         fields = ('description', 'category', 'date', 'upload')
 
 
-
 class LectureCreateForm(forms.ModelForm):
     desired_time = forms.TimeField(
         label='Желаемое время',
@@ -33,8 +32,8 @@ class LectureCreateForm(forms.ModelForm):
         input_formats=settings.TIME_INPUT_FORMATS,
         widget=TextInput(attrs={'type': 'time'})
     )
-    
+
     class Meta:
         model = Lecture
-        fields = ('title', 'description', 'slug', 'conference', 'category', 'desired_time', 'file')
-    
+        fields = ('title', 'description', 'slug', 'conference',
+                  'category', 'desired_time', 'file')

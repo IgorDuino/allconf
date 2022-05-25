@@ -16,44 +16,74 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name='conferencemoderator',
-            options={'verbose_name': 'Модератор', 'verbose_name_plural': 'Модераторы'},
+            options={
+                'verbose_name': 'Модератор',
+                'verbose_name_plural': 'Модераторы'},
         ),
         migrations.AlterModelOptions(
             name='conferenceorganizer',
-            options={'verbose_name': 'Организатор', 'verbose_name_plural': 'Организаторы'},
+            options={
+                'verbose_name': 'Организатор',
+                'verbose_name_plural': 'Организаторы'},
         ),
         migrations.AlterModelOptions(
             name='listener',
-            options={'verbose_name': 'Посетитель', 'verbose_name_plural': 'Посетители'},
+            options={
+                'verbose_name': 'Посетитель',
+                'verbose_name_plural': 'Посетители'},
         ),
         migrations.AlterField(
             model_name='conferencemoderator',
             name='conference',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='moderators', to='manager.conference', verbose_name='Конференция'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='moderators',
+                to='manager.conference',
+                verbose_name='Конференция'),
         ),
         migrations.AlterField(
             model_name='conferencemoderator',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='moderated_conferences', to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='moderated_conferences',
+                to=settings.AUTH_USER_MODEL,
+                verbose_name='Пользователь'),
         ),
         migrations.AlterField(
             model_name='conferenceorganizer',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='orginized_conferences', to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='orginized_conferences',
+                to=settings.AUTH_USER_MODEL,
+                verbose_name='Пользователь'),
         ),
         migrations.AlterField(
             model_name='listener',
             name='conference',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='listeners', to='manager.conference', verbose_name='Конференция'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='listeners',
+                to='manager.conference',
+                verbose_name='Конференция'),
         ),
         migrations.AlterField(
             model_name='listener',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='booked_conferences', to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='booked_conferences',
+                to=settings.AUTH_USER_MODEL,
+                verbose_name='Пользователь'),
         ),
         migrations.AlterField(
             model_name='speaker',
             name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='lectures', to=settings.AUTH_USER_MODEL, verbose_name='Пользователь'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='lectures',
+                to=settings.AUTH_USER_MODEL,
+                verbose_name='Пользователь'),
         ),
     ]

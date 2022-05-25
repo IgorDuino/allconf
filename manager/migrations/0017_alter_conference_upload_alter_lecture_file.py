@@ -14,11 +14,19 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='conference',
             name='upload',
-            field=models.ImageField(null=True, upload_to='uploads/', verbose_name='Главное изображение'),
+            field=models.ImageField(
+                null=True,
+                upload_to='uploads/',
+                verbose_name='Главное изображение'),
         ),
         migrations.AlterField(
             model_name='lecture',
             name='file',
-            field=models.FileField(upload_to='files', validators=[django.core.validators.FileExtensionValidator(allowed_extensions=['pdf'])], verbose_name='Презентация'),
+            field=models.FileField(
+                upload_to='files',
+                validators=[
+                    django.core.validators.FileExtensionValidator(
+                        allowed_extensions=['pdf'])],
+                verbose_name='Презентация'),
         ),
     ]

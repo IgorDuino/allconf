@@ -15,35 +15,54 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='category',
             name='lft',
-            field=models.PositiveIntegerField(default=None, editable=False),
+            field=models.PositiveIntegerField(
+                default=None,
+                editable=False),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='category',
             name='mptt_level',
-            field=models.PositiveIntegerField(default=None, editable=False),
+            field=models.PositiveIntegerField(
+                default=None,
+                editable=False),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='category',
             name='rght',
-            field=models.PositiveIntegerField(default=None, editable=False),
+            field=models.PositiveIntegerField(
+                default=None,
+                editable=False),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='category',
             name='tree_id',
-            field=models.PositiveIntegerField(db_index=True, default=None, editable=False),
+            field=models.PositiveIntegerField(
+                db_index=True,
+                default=None,
+                editable=False),
             preserve_default=False,
         ),
         migrations.AlterField(
             model_name='category',
             name='parent',
-            field=mptt.fields.TreeForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='subcategories', to='manager.category', verbose_name='Родительская категория'),
+            field=mptt.fields.TreeForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name='subcategories',
+                to='manager.category',
+                verbose_name='Родительская категория'),
         ),
         migrations.AlterField(
             model_name='lecture',
             name='conference',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='lectures', to='manager.conference', verbose_name='Конференция'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name='lectures',
+                to='manager.conference',
+                verbose_name='Конференция'),
         ),
     ]

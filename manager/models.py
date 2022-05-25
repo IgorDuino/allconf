@@ -35,35 +35,34 @@ class Category(MPTTModel, TitleDescriptionMixin, SlugMixin, IsActiveMixin):
         verbose_name_plural = 'Категории'
 
 
-
 class ConferenceManager(models.Manager):
     def get_active(self):
         queryset = self.get_queryset().filter(is_active=True)
-        
+
         return queryset
-    
+
     def get_conference_with_lectures(self):
         queryset = self.get_active().prefetch_related(
             Prefetch('lectures', queryset=Lecture.objects.filter(is_active=True))
         )
-        
+
         return queryset
-            
+
     def get_conference_with_lectures_and_category(self):
         queryset = self.get_active().prefetch_related(
-            Prefetch('lectures', queryset=Lecture.objects.filter(is_active=True, confirmed=True))
+            Prefetch('lectures', queryset=Lecture.objects.filter(
+                is_active=True, confirmed=True))
         ).select_related('category')
-        
+
         return queryset
-    
+
     def get_conference_with_all_lectures_and_category(self):
         queryset = self.get_active().prefetch_related(
-            Prefetch('lectures', queryset=Lecture.objects.filter(is_active=True))
-        ).select_related('category')
-        
+            Prefetch(
+                'lectures', queryset=Lecture.objects.filter(
+                    is_active=True))).select_related('category')
+
         return queryset
-
-
 
 
 class Conference(TitleDescriptionMixin, SlugMixin, IsActiveMixin):
@@ -80,7 +79,7 @@ class Conference(TitleDescriptionMixin, SlugMixin, IsActiveMixin):
         upload_to='uploads/',
         null=True
     )
-    
+
     def get_image_x1280(self):
         return get_thumbnail(self.upload, '1280', quality=51)
 
@@ -93,7 +92,7 @@ class Conference(TitleDescriptionMixin, SlugMixin, IsActiveMixin):
                 f'<img src="{self.upload.url}", width="50">'
             )
         return 'Нет изображения'
-    
+
     def __str__(self):
         return self.title[:20]
 
