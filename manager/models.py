@@ -38,14 +38,12 @@ class Category(MPTTModel, TitleDescriptionMixin, SlugMixin, IsActiveMixin):
 class ConferenceManager(models.Manager):
     def get_active(self):
         queryset = self.get_queryset().filter(is_active=True)
-
         return queryset
 
     def get_conference_with_lectures(self):
         queryset = self.get_active().prefetch_related(
             Prefetch('lectures', queryset=Lecture.objects.filter(is_active=True))
         )
-
         return queryset
 
     def get_conference_with_lectures_and_category(self):
@@ -53,7 +51,6 @@ class ConferenceManager(models.Manager):
             Prefetch('lectures', queryset=Lecture.objects.filter(
                 is_active=True, confirmed=True))
         ).select_related('category')
-
         return queryset
 
     def get_conference_with_all_lectures_and_category(self):
@@ -61,7 +58,6 @@ class ConferenceManager(models.Manager):
             Prefetch(
                 'lectures', queryset=Lecture.objects.filter(
                     is_active=True))).select_related('category')
-
         return queryset
 
 
