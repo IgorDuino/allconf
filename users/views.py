@@ -7,7 +7,6 @@ from users.models import ConferenceOrganizer, ConferenceModerator, Speaker, List
 
 from users.forms import SignupForm, ProfileForm
 
-
 User = get_user_model()
 
 
@@ -37,7 +36,7 @@ class SignupView(View):
 
             user = User.objects.filter(username=username)
 
-            if len(user) == 0:
+            if user.exists():
                 if password == repeat_password:
                     User.objects.create_user(
                         username=username, email=email, password=password)
@@ -61,7 +60,7 @@ class ProfileView(View):
     def get_queryset(request):
         user = User.objects.filter(id=request.user.id)
 
-        return user[0]
+        return user and user[0]
 
     def get(self, request):
         form = self.form_class()
@@ -72,8 +71,6 @@ class ProfileView(View):
                             Speaker.objects.filter(user=request.user)))
         visited = list(map(lambda x: x.conference,
                            Listener.objects.filter(user=request.user)))
-
-        print(conferences)
 
         context = {
             'form': form,

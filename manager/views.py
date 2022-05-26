@@ -1,13 +1,14 @@
-from django.shortcuts import render, reverse
-from django.http import HttpResponseRedirect
 from django.views.generic import View
-from manager.models import Category, Lecture, Conference
-from django.shortcuts import get_object_or_404
-from manager.forms import ConferenceCreateForm, LectureCreateForm, ConferenceChangeForm
-from users.models import ConferenceOrganizer, ConferenceModerator, Speaker, Listener
-from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.http import Http404
+from django.contrib.auth.decorators import login_required
+
+from django.http import HttpResponseRedirect, Http404
+from django.shortcuts import render, reverse, get_object_or_404
+
+from users.models import ConferenceOrganizer, ConferenceModerator, Speaker, Listener
+
+from manager.models import Category, Lecture, Conference
+from manager.forms import ConferenceCreateForm, LectureCreateForm, ConferenceChangeForm
 
 
 class ConfView(View):
@@ -38,7 +39,7 @@ class ConfView(View):
         if request.POST.get('listener'):
             listener = Listener.objects.filter(
                 user=request.user, conference=conference)
-            if len(listener) == 0:
+            if not listener.exists():
                 Listener.objects.create(
                     conference=conference,
                     user=request.user
@@ -65,10 +66,10 @@ class ConfAdminView(View):
     def check_permission(request, conference):
         user = request.user
 
-        orginizer_permission = len(ConferenceOrganizer.objects.filter(
-            user=user, conference=conference)) != 0
-        moderator_permission = len(ConferenceModerator.objects.filter(
-            user=user, conference=conference)) != 0
+        orginizer_permission = ConferenceOrganizer.objects.filter(
+            user=user, conference=conference).exists()
+        moderator_permission = ConferenceModerator.objects.filter(
+            user=user, conference=conference).exists()
 
         return orginizer_permission or moderator_permission
 
@@ -118,7 +119,7 @@ class ConfAdminView(View):
 
             if request.POST.get('time_manager'):
                 for lecture in conference.lectures.all():
-                    if request.POST.get(lecture.slug + '_active'):
+                    if request.POST.get(f'{lecture.slug}_active'):
                         if request.POST.get(lecture.slug):
                             time = request.POST.get(lecture.slug)
                             lecture.time = time
@@ -192,7 +193,7 @@ class CreateConferenceView(View):
 
             conf = Conference.objects.filter(title=title)
 
-            if len(conf) == 0:
+            if not conf.exists():
                 conf = Conference.objects.create(
                     title=title,
                     description=description,
@@ -254,7 +255,7 @@ class CreateLectureView(View):
 
             lecture = Lecture.objects.filter(title=title)
 
-            if len(lecture) == 0:
+            if not lecture.exists():
                 lecture = Lecture.objects.create(
                     title=title,
                     description=description,

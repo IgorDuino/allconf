@@ -4,7 +4,6 @@ from django.contrib.auth import get_user_model
 from manager.models import Conference, Lecture
 from django.forms.widgets import TextInput, DateInput, TimeInput
 
-
 User = get_user_model()
 
 

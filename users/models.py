@@ -19,6 +19,9 @@ class Speaker(models.Model):
     class Meta:
         verbose_name = 'Докладчик'
         verbose_name_plural = 'Докладчики'
+    
+    def __str__(self):
+        return f'<Speaker: user={self.user} | lecture={self.lecture} >'
 
 
 class ConferenceOrganizer(models.Model):
@@ -37,6 +40,9 @@ class ConferenceOrganizer(models.Model):
     class Meta:
         verbose_name = 'Организатор'
         verbose_name_plural = 'Организаторы'
+
+    def __str__(self):
+        return f'<ConfOrganizer: user={self.user} | conference={self.lecture} >'
 
 
 class ConferenceModerator(models.Model):
@@ -75,6 +81,13 @@ class ConferenceModerator(models.Model):
     class Meta:
         verbose_name = 'Модератор'
         verbose_name_plural = 'Модераторы'
+    
+    def __str__(self):
+        return (
+            f'<ConfModerator: user={self.user} | conference={self.lecture} | opp_mask='
+            f'{int(self.change_category)}{int(self.change_identity)}{int(self.change_date)}'
+            f'{int(self.manage_speakers)}{int(self.change_landing)} >'
+        )
 
 
 class Listener(models.Model):
@@ -99,3 +112,6 @@ class Listener(models.Model):
     class Meta:
         verbose_name = 'Посетитель'
         verbose_name_plural = 'Посетители'
+
+    def __str__(self):
+        return f'<Listener: user={self.user} | conference={self.lecture} | time={self.arrival_time} >'

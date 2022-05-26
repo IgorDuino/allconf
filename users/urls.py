@@ -1,8 +1,11 @@
 from django.urls import path
-from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView, \
-    PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
-from .views import SignupView, ProfileView
+from django.contrib.auth.views import (
+    LoginView, LogoutView,
+    PasswordChangeView, PasswordChangeDoneView, PasswordResetView,
+    PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+)
 
+from .views import SignupView, ProfileView
 
 app_name = 'users'
 urlpatterns = [
