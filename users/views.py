@@ -75,7 +75,7 @@ class ProfileView(View):
         context = {
             'form': form,
             'user': self.get_queryset(request),
-            'conference': conferences,
+            'conferences': conferences,
             'lectures': lectures,
             'visited': visited
         }

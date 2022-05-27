@@ -42,7 +42,7 @@ class ConferenceOrganizer(models.Model):
         verbose_name_plural = 'Организаторы'
 
     def __str__(self):
-        return f'<ConfOrganizer: user={self.user} | conference={self.lecture} >'
+        return f'<ConfOrganizer: user={self.user} | conference={self.conference} >'
 
 
 class ConferenceModerator(models.Model):
@@ -84,7 +84,7 @@ class ConferenceModerator(models.Model):
     
     def __str__(self):
         return (
-            f'<ConfModerator: user={self.user} | conference={self.lecture} | opp_mask='
+            f'<ConfModerator: user={self.user} | conference={self.conference} | opp_mask='
             f'{int(self.change_category)}{int(self.change_identity)}{int(self.change_date)}'
             f'{int(self.manage_speakers)}{int(self.change_landing)} >'
         )
@@ -114,4 +114,4 @@ class Listener(models.Model):
         verbose_name_plural = 'Посетители'
 
     def __str__(self):
-        return f'<Listener: user={self.user} | conference={self.lecture} | time={self.arrival_time} >'
+        return f'<Listener: user={self.user} | conference={self.conference} | time={self.arrival_time} >'

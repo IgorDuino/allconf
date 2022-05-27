@@ -13,6 +13,17 @@ from manager.forms import ConferenceCreateForm, LectureCreateForm, ConferenceCha
 
 class ConfView(View):
     template_name = 'manager/conf-detail.html'
+    
+    @staticmethod
+    def check_permission(request, conference):
+        user = request.user
+
+        orginizer_permission = ConferenceOrganizer.objects.filter(
+            user=user, conference=conference).exists()
+        moderator_permission = ConferenceModerator.objects.filter(
+            user=user, conference=conference).exists()
+
+        return orginizer_permission or moderator_permission
 
     def get(self, request, conf_slug):
         conference = get_object_or_404(
@@ -20,7 +31,8 @@ class ConfView(View):
             slug=conf_slug)
 
         context = {
-            'conf': conference
+            'conf': conference,
+            'is_admin': self.check_permission(request, conference)
         }
 
         return render(
@@ -48,7 +60,8 @@ class ConfView(View):
                 return HttpResponseRedirect(reverse('users:profile'))
 
         context = {
-            'conf': conference
+            'conf': conference,
+            'is_admin': self.check_permission(request, conference)
         }
 
         return render(

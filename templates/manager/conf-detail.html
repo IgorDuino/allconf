@@ -6,7 +6,7 @@
 <section class="conf-detail" style="background: linear-gradient(rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.35)),
 url({{ conf.get_image_x1280.url }}) center / cover;">
     <header class="text-center text-white masthead" style="background: rgba(52,58,64,0);">
-        {% if user.is_authenticated %}
+        {% if user.is_authenticated and is_admin %}
             <a href="{% url 'manager:conf-admin' conf.slug %}">
                 <button type="submit" name="admin" class="btn btn-primary" style="font-size: 23px;font-weight: bold;border-radius: 4px;">Изменить конференцию</button>
             </a>
