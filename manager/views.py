@@ -11,6 +11,7 @@ from manager.models import Category, Lecture, Conference
 from manager.forms import ConferenceCreateForm, LectureCreateForm, ConferenceChangeForm
 
 
+@method_decorator(login_required, name='dispatch')
 class ConfView(View):
     template_name = 'manager/conf-detail.html'
     
@@ -40,7 +41,6 @@ class ConfView(View):
             template_name=self.template_name,
             context=context)
 
-    @method_decorator(login_required)
     def post(self, request, conf_slug):
         conference = get_object_or_404(
             Conference.objects.get_conference_with_lectures_and_category(),

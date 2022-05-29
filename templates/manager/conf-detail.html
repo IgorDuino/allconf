@@ -24,7 +24,6 @@ url({{ conf.get_image_x1280.url }}) center / cover;">
                     </form>
                 </div>
             </div>
-
             {% for lecture in conf.lectures.all %}
                 <a href="{% url 'manager:lecture-detail' conf.slug lecture.slug %}">
                     <div class="row" style="background: var(--bs-gray-100);border-radius: 15px;margin-bottom: 20px;height: 99px;">
